@@ -22,12 +22,16 @@ Two halves, one JSON contract (`web/public/data/scored_orders.json`):
 
 ```
 ml-pipeline/  (Python)                web/  (Vite + React, GitHub Pages)
-  src/download_data.py fetch Olist      src/utils/riskEngine.js   all money math
-  src/data_prep.py     join + label     src/config/uiTheme.js     all styling
-  src/features.py      leakage-free     src/components/
-  src/train.py         XGBoost              PolicySimulator.jsx   sliders → live EP
-  src/calibrate.py     prob. calib.         OrderInspector.jsx    SHAP drill-down
-  src/export_json.py   JSON contract        StressTestPanel.jsx   Harbolnas 11.11
+  src/data_prep.py   join + label       src/utils/riskEngine.js   all money math
+  src/features.py    leakage-free feats src/config/uiTheme.js     all styling
+  src/train.py       XGBoost            src/components/
+  src/calibrate.py   probability calib.     PolicySimulator.jsx   sliders → live EP
+  src/export_json.py JSON contract          OrderInspector.jsx    SHAP drill-down
+                                            StressTestPanel.jsx   Harbolnas 11.11
+notebooks/
+  01_model_evaluation.ipynb   every figure for the report (ROC/PR, calibration,
+                              prior shift, SHAP, policy economics) — executed, with
+                              figures saved under notebooks/figures/
 ```
 
 The frontend is fully static: **all** expected-profit and policy-routing
@@ -81,6 +85,10 @@ cd ../../web
 npm install
 npm run dev        # local
 npm run build      # production build (dist/)
+
+# 3. Report figures (after the pipeline has run)
+cd ../notebooks
+jupyter nbconvert --to notebook --execute --inplace 01_model_evaluation.ipynb
 ```
 
 Data source: [Olist Brazilian E-Commerce Dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
